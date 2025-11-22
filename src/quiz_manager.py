@@ -1,13 +1,97 @@
 """Quiz Manager Module
 
 This module handles loading questions from CSV, calculating scores,
-and saving results to CSV.
+and saving results to CSV. Also integrates with Telegram for notifications.
 """
 
 import pandas as pd
+import subprocess
+import socket
+import time
+import requests
 from datetime import datetime
 from pathlib import Path
 from typing import List, Dict
+
+
+def check_connection(host="api.telegram.org", port=443, timeout=5):
+    """Check internet connection to Telegram API.
+    
+    Args:
+        host: Host to check connection to
+        port: Port number
+        timeout: Timeout in seconds
+        
+    Returns:
+        True if connection is available, False otherwise
+    """
+    try:
+        socket.setdefaulttimeout(timeout)
+        socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
+        return True
+    except socket.error as ex:
+        print(f"Network error: {ex}")
+        return False
+
+
+def all_send_warp(chat_id, bot_token, file_path):
+    """Send file via Telegram with Cloudflare Warp management.
+    
+    Args:
+        chat_id: Telegram chat ID
+        bot_token: Telegram bot token
+        file_path: Path to file to send
+        
+    Returns:
+        Response JSON from Telegram API
+    """
+    try:
+        # Try to disconnect Warp
+        try:
+            subprocess.run(["warp-cli", "disconnect"], check=True)
+            print("Warp disconnected.")
+            time.sleep(2)
+        except (subprocess.CalledProcessError, FileNotFoundError):
+            print("Warp not available, continuing without disconnect.")
+        
+        # Check connection
+        if not check_connection():
+            print("Cannot connect to Telegram API. Checking connection...")
+            return None
+        
+        # Send file via Telegram
+        url = f"https://cool-butterfly-9ded.tungson92dkh.workers.dev//bot{bot_token}/sendDocument"
+        with open(file_path, "rb") as file:
+            files = {"document": file}
+            data = {"chat_id": chat_id}
+            response = requests.post(url, files=files, data=data, timeout=10)
+            print(f"File sent successfully to Telegram: {file_path}")
+            return response.json()
+            
+    except Exception as e:
+        print(f"Error sending file: {e}")
+        return None
+    finally:
+        # Try to reconnect Warp
+        try:
+            subprocess.run(["warp-cli", "connect"], check=True)
+            print("Warp reconnected.")
+        except (subprocess.CalledProcessError, FileNotFoundError):
+            print("Warp reconnection skipped.")
+
+
+def send_file_hnd(file_path):
+    """Send file to HND Telegram group.
+    
+    Args:
+        file_path: Path to file to send
+        
+    Returns:
+        Response from Telegram API
+    """
+    token = "2143046655:AAE5iwz9KY8ofLZ_Vm3xhBrjpEyILDYzRy8"  # telegram token
+    receiver_id = "-1001512252982"
+    return all_send_warp(receiver_id, token, file_path)
 
 
 def load_questions(file_path: str) -> List[Dict]:

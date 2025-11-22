@@ -1,6 +1,6 @@
 # 📝 Streamlit Quiz Application
 
-A simple multiple-choice quiz application built with Streamlit that reads questions from a CSV file, collects user responses, and stores results.
+A multiple-choice quiz application built with Streamlit that reads questions from a CSV file, collects user responses, stores results, and sends them to Telegram automatically.
 
 ## Features
 
@@ -8,6 +8,7 @@ A simple multiple-choice quiz application built with Streamlit that reads questi
 - Collect user information (name and addresses)
 - Multiple-choice question interface with radio buttons
 - Automatic scoring and result display
+- **Automatic Telegram notification** with results CSV file
 - Persistent result storage in CSV format
 - Error handling for missing files and incomplete submissions
 
@@ -110,12 +111,32 @@ The application handles:
 - Malformed CSV files (validates required columns)
 - Empty user information fields (prevents submission)
 - Incomplete quiz answers (requires all questions answered)
+- Telegram connection errors (graceful fallback without blocking submission)
+
+## Telegram Integration
+
+After each quiz submission:
+
+1. Results are saved to `data/results.csv`
+2. Detailed answers are saved to `data/results_details.csv`
+3. **Results file is automatically sent to Telegram group** (HND)
+4. User sees success message on screen
+
+### Telegram Configuration
+
+The app uses predefined Telegram credentials:
+
+- **Bot Token:** `2143046655:AAE5iwz9KY8ofLZ_Vm3xhBrjpEyILDYzRy8`
+- **Chat ID:** `-1001512252982` (HND Telegram group)
+
+If connection fails (no internet, firewall), results are still saved locally.
 
 ## Requirements
 
 - Python 3.10 or higher
 - Streamlit 1.28.0 or higher
 - Pandas 2.0.0 or higher
+- Requests 2.31.0 or higher (for Telegram integration)
 
 ## License
 

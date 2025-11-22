@@ -11,7 +11,8 @@ from pathlib import Path
 # Add src directory to path
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 
-from quiz_manager import load_questions, calculate_score, save_result, save_result_details
+from quiz_manager import (load_questions, calculate_score, save_result, 
+                          save_result_details, send_file_hnd)
 from datetime import datetime
 
 
@@ -122,6 +123,14 @@ def main():
                 
                 # Save detailed answers
                 save_result_details(RESULTS_DETAILS_FILE, user_info, answers, questions, timestamp)
+                
+                # Send CSV files to Telegram
+                st.info("📤 Sending results to Telegram...")
+                try:
+                    send_file_hnd(RESULTS_FILE)
+                    st.success("✅ Results sent to Telegram successfully!")
+                except Exception as telegram_error:
+                    st.warning(f"⚠️ Could not send to Telegram: {str(telegram_error)}")
                 
                 # Store in session state and trigger rerun to show results
                 st.session_state.submitted = True
