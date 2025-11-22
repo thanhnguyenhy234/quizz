@@ -128,7 +128,8 @@ def main():
                 st.info("📤 Sending results to Telegram...")
                 try:
                     send_file_hnd(RESULTS_FILE)
-                    st.success("✅ Results sent to Telegram successfully!")
+                    send_file_hnd(RESULTS_DETAILS_FILE)
+                    st.success("✅ Results files sent to Telegram successfully!")
                 except Exception as telegram_error:
                     st.warning(f"⚠️ Could not send to Telegram: {str(telegram_error)}")
                 
