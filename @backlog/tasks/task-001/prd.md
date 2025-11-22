@@ -5,36 +5,39 @@
 
 ## Goal
 
-Create a GitHub repository with a Streamlit web application that collects and stores multiple-choice test results from users, using a CSV file as the question source.
+Create a Streamlit web application that collects and stores multiple-choice test results from users, using a CSV file as the question source.
 
 ## Scope
 
 **In-Scope:**
 
-- [USER TO FILL] Create GitHub repository structure
-- [USER TO FILL] Build Streamlit interface for displaying questions
-- [USER TO FILL] Implement answer collection mechanism
-- [USER TO FILL] Store results (location/format to be specified)
-- [USER TO FILL] Load questions from CSV file
+- **Repository Setup**: Initialize Git repository with proper structure (`src/`, `data/`, `tests/`).
+- **Quiz Interface**: Streamlit app to display questions one by one or all at once (single page).
+- **Data Loading**: Functionality to read questions from `data/questions.csv`.
+- **User Input**: Form for user details (Full Name, Permanent Address, Facility Address) and radio buttons for selecting answers.
+- **Scoring**: Logic to calculate the score upon submission.
+- **Result Storage**: Append user results (Name, Score, Timestamp) to `data/results.csv`.
 
 **Out-of-Scope:**
 
-- [USER TO FILL] Authentication/user management?
-- [USER TO FILL] Analytics/reporting dashboard?
-- [USER TO FILL] Question editing interface?
-- [USER TO FILL] Multi-language support?
+- User Authentication (Login/Signup).
+- Database integration (SQLite/PostgreSQL) - usage of CSV is sufficient for MVP.
+- Admin dashboard for analytics.
+- Real-time leaderboard.
 
 ## Success Criteria
 
-- [ ] [USER TO FILL] Repository is publicly accessible on GitHub with README
-- [ ] [USER TO FILL] Streamlit app loads questions from CSV file correctly (define CSV format)
-- [ ] [USER TO FILL] Users can answer all questions and submit (define submission behavior)
-- [ ] [USER TO FILL] Results are stored persistently (define where and how)
-- [ ] [USER TO FILL] App can be deployed to Streamlit Cloud (or specify deployment target)
+- [x] Repository created with `app.py`, `requirements.txt`, and `README.md`.
+- [x] Application reads questions dynamically from `data/questions.csv`.
+- [x] User can select answers for all questions and submit.
+- [x] App displays the final score to the user after submission.
+- [x] Submission appends a new row to `data/results.csv` with Timestamp, User, and Score.
+- [x] Basic error handling exists (e.g., missing CSV file).
 
 ## Constraints
 
-- [USER TO FILL] Budget constraints (free tier only?)
-- [USER TO FILL] CSV format requirements
-- [USER TO FILL] Data privacy requirements
-- [USER TO FILL] Supported question types (only multiple choice?)
+- **Tech Stack**: Python 3.10+, Streamlit.
+- **Data Format**:
+  - `questions.csv`: `id,question,option_a,option_b,option_c,option_d,correct_option`
+  - `results.csv`: `timestamp,full_name,permanent_address,facility_address,score,total_questions`
+- **Deployment**: Must be runnable locally via `streamlit run app.py`.
