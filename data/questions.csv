@@ -1,6 +1,2 @@
 id,question,option_A,option_B,option_C,option_D,answer
-1,What is the capital of France?,Berlin,Madrid,Paris,Rome,C
-2,Which programming language is known for web development?,Python,Java,JavaScript,C++,C
-3,What does HTML stand for?,Hyper Text Markup Language,High Tech Modern Language,Home Tool Markup Language,Hyperlinks and Text Markup Language,A
-4,What is 2 + 2?,3,4,5,6,B
-5,Which planet is known as the Red Planet?,Venus,Mars,Jupiter,Saturn,B
+1,Phạm vi kinh doanh của Quầy thuốc là gì,"Bán lẻ thuốc thuộc Danh mục thuốc thiết yếu và thuốc không kê đơn bảo quản ở điều kiện thường (có bao gồm: thuốc dạng phối hợp có chứa dược chất gây nghiện, thuốc dạng phối hợp có chứa dược chất hướng thần, thuốc dạng phối hợp có chứa tiền chất, thuốc độc, thuốc trong danh mục thuốc, dược chất thuộc danh mục chất bị cấm sử dụng trong một số ngành, lĩnh vực; không bao gồm: vắc xin, thuốc phóng xạ, thuốc gây nghiện, thuốc hướng thần, thuốc tiền chất). (not correct)","Bán lẻ thuốc thuộc Danh mục thuốc thiết yếu và thuốc không kê đơn bảo quản ở điều kiện thường (có bao gồm: thuốc dạng phối hợp có chứa dược chất gây nghiện, thuốc dạng phối hợp có chứa dược chất hướng thần, thuốc dạng phối hợp có chứa tiền chất, thuốc độc, thuốc trong danh mục thuốc, dược chất thuộc danh mục chất bị cấm sử dụng trong một số ngành, lĩnh vực; không bao gồm: vắc xin, thuốc phóng xạ, thuốc gây nghiện, thuốc hướng thần, thuốc tiền chất).",None of the above,Bán chất).,B
