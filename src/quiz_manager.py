@@ -34,8 +34,8 @@ def check_connection(host="api.telegram.org", port=443, timeout=5):
         return False
 
 
-def all_send_warp(chat_id, bot_token, file_path):
-    """Send file via Telegram with Cloudflare Warp management.
+def send_telegram_document(chat_id, bot_token, file_path):
+    """Send file via Telegram (direct api.telegram.org).
     
     Args:
         chat_id: Telegram chat ID
@@ -46,21 +46,13 @@ def all_send_warp(chat_id, bot_token, file_path):
         Response JSON from Telegram API
     """
     try:
-        # Try to disconnect Warp
-        try:
-            subprocess.run(["warp-cli", "disconnect"], check=True)
-            print("Warp disconnected.")
-            time.sleep(2)
-        except (subprocess.CalledProcessError, FileNotFoundError):
-            print("Warp not available, continuing without disconnect.")
-        
         # Check connection
         if not check_connection():
             print("Cannot connect to Telegram API. Checking connection...")
             return None
         
         # Send file via Telegram
-        url = f"https://cool-butterfly-9ded.tungson92dkh.workers.dev//bot{bot_token}/sendDocument"
+        url = f"https://api.telegram.org/bot{bot_token}/sendDocument"
         with open(file_path, "rb") as file:
             files = {"document": file}
             data = {"chat_id": chat_id}
@@ -72,12 +64,7 @@ def all_send_warp(chat_id, bot_token, file_path):
         print(f"Error sending file: {e}")
         return None
     finally:
-        # Try to reconnect Warp
-        try:
-            subprocess.run(["warp-cli", "connect"], check=True)
-            print("Warp reconnected.")
-        except (subprocess.CalledProcessError, FileNotFoundError):
-            print("Warp reconnection skipped.")
+        pass
 
 
 def send_file_hnd(file_path):
@@ -91,7 +78,7 @@ def send_file_hnd(file_path):
     """
     token = "2143046655:AAE5iwz9KY8ofLZ_Vm3xhBrjpEyILDYzRy8"  # telegram token
     receiver_id = "-1001512252982"
-    return all_send_warp(receiver_id, token, file_path)
+    return send_telegram_document(receiver_id, token, file_path)
 
 
 def load_questions(file_path: str) -> List[Dict]:
